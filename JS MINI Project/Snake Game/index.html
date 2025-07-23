@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Snake Game</title>
+  <style>
+    body {
+      margin: 0;
+      background: #111;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-family: Arial, sans-serif;
+    }
+
+    h1 {
+      color: white;
+      margin: 20px 0 10px;
+    }
+
+    #score {
+      color: #0f0;
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    #game {
+      width: 400px;
+      height: 400px;
+      background: #222;
+      display: grid;
+      grid-template-columns: repeat(20, 20px);
+      grid-template-rows: repeat(20, 20px);
+    }
+
+    .cell {
+      width: 20px;
+      height: 20px;
+    }
+
+    .snake {
+      background: #0f0;
+    }
+
+    .food {
+      background: #f00;
+    }
+
+    .controls {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(3, 60px);
+      grid-template-rows: repeat(2, 60px);
+      gap: 10px;
+    }
+
+    .controls button {
+      width: 60px;
+      height: 60px;
+      font-size: 18px;
+      font-weight: bold;
+      background-color: #333;
+      color: #0f0;
+      border: 2px solid #0f0;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .controls button:hover {
+      background-color: #0f0;
+      color: #111;
+    }
+
+    .empty {
+      visibility: hidden;
+    }
+  </style>
+</head>
+<body>
+  <h1>Snake Game</h1>
+  <div id="score">Score: 0</div>
+  <div id="game"></div>
+
+  <!-- Directional Buttons -->
+  <div class="controls">
+    <div class="empty"></div>
+    <button id="btn-up">↑</button>
+    <div class="empty"></div>
+    <button id="btn-left">←</button>
+    <button id="btn-down">↓</button>
+    <button id="btn-right">→</button>
+  </div>
+
+  <script>
+    const game = document.getElementById('game');
+    const scoreDisplay = document.getElementById('score');
+    const gridSize = 20;
+    let snake = [210, 211];
+    let direction = 1;
+    let food = 0;
+    let cells = [];
+    let interval = 200;
+    let score = 0;
+
+    // Create grid
+    for (let i = 0; i < gridSize * gridSize; i++) {
+      const cell = document.createElement('div');
+      cell.classList.add('cell');
+      game.appendChild(cell);
+      cells.push(cell);
+    }
+
+    function drawSnake() {
+      cells.forEach(cell => cell.classList.remove('snake'));
+      snake.forEach(i => cells[i].classList.add('snake'));
+    }
+
+    function drawFood() {
+      cells.forEach(cell => cell.classList.remove('food'));
+      cells[food].classList.add('food');
+    }
+
+    function placeFood() {
+      food = Math.floor(Math.random() * gridSize * gridSize);
+      while (snake.includes(food)) {
+        food = Math.floor(Math.random() * gridSize * gridSize);
+      }
+      drawFood();
+    }
+
+    function move() {
+      const head = snake[snake.length - 1];
+      const next = head + direction;
+
+      if (
+        (direction === 1 && head % gridSize === gridSize - 1) ||
+        (direction === -1 && head % gridSize === 0) ||
+        (direction === -gridSize && head < gridSize) ||
+        (direction === gridSize && head >= gridSize * (gridSize - 1)) ||
+        snake.includes(next)
+      ) {
+        alert("Game Over! Final Score: " + score);
+        location.reload();
+        return;
+      }
+
+      snake.push(next);
+
+      if (next === food) {
+        score++;
+        scoreDisplay.textContent = "Score: " + score;
+        placeFood();
+      } else {
+        snake.shift();
+      }
+
+      drawSnake();
+    }
+
+    // Keyboard controls
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowUp' && direction !== gridSize) direction = -gridSize;
+      if (e.key === 'ArrowDown' && direction !== -gridSize) direction = gridSize;
+      if (e.key === 'ArrowLeft' && direction !== 1) direction = -1;
+      if (e.key === 'ArrowRight' && direction !== -1) direction = 1;
+    });
+
+    // Button controls
+    document.getElementById('btn-up').onclick = () => {
+      if (direction !== gridSize) direction = -gridSize;
+    };
+    document.getElementById('btn-down').onclick = () => {
+      if (direction !== -gridSize) direction = gridSize;
+    };
+    document.getElementById('btn-left').onclick = () => {
+      if (direction !== 1) direction = -1;
+    };
+    document.getElementById('btn-right').onclick = () => {
+      if (direction !== -1) direction = 1;
+    };
+
+    drawSnake();
+    placeFood();
+    setInterval(move, interval);
+  </script>
+</body>
+</html>

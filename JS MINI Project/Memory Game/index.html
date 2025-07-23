@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Memory Game</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>🧠 Memory Game</h1>
+  <div id="info-bar">
+    ⏱️ Time: <span id="timer">0</span> sec
+    <button onclick="restartGame()">🔄 Restart</button>
+  </div>
+
+  <div class="game-board" id="game-board"></div>
+
+  <div id="win-message" class="hidden">
+    <h2 id="win-text">🎉 You Win!</h2>
+    <button onclick="restartGame()">🔁 Play Again</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My JS Mini Projects</title>
+  <style>
+    :root {
+      --bg-color: linear-gradient(135deg, #667eea, #764ba2);
+      --text-color: #fff;
+      --card-bg: rgba(255, 255, 255, 0.1);
+      --card-hover-bg: rgba(255, 255, 255, 0.2);
+      --card-hover-text: #000;
+    }
+
+    body.light-mode {
+      --bg-color: linear-gradient(135deg, #fdfbfb, #ebedee);
+      --text-color: #000;
+      --card-bg: rgba(0, 0, 0, 0.05);
+      --card-hover-bg: rgba(0, 0, 0, 0.1);
+      --card-hover-text: #000;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+    }
+
+    body {
+      background: var(--bg-color);
+      font-family: 'Segoe UI', sans-serif;
+      color: var(--text-color);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: all 0.4s ease;
+    }
+
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Toggle Switch Styling */
+    .switch {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: inline-block;
+      width: 60px;
+      height: 30px;
+      z-index: 999;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #222;
+      transition: 0.4s;
+      border-radius: 30px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "🌙";
+      height: 24px;
+      width: 24px;
+      left: 4px;
+      bottom: 3px;
+      background-color: white;
+      border-radius: 50%;
+      transition: 0.4s;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    input:checked + .slider {
+      background-color: #f1c40f;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(30px);
+      content: "🌞";
+    }
+
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 20px;
+      max-width: 1100px;
+      width: 100%;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      color: var(--text-color);
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: 500;
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px) scale(1.03);
+      background: var(--card-hover-bg);
+      color: var(--card-hover-text);
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .card {
+        font-size: 16px;
+        padding: 16px;
+      }
+
+      .switch {
+        top: 10px;
+        right: 10px;
+        width: 50px;
+        height: 26px;
+      }
+
+      .slider:before {
+        height: 20px;
+        width: 20px;
+        font-size: 14px;
+      }
+
+      input:checked + .slider:before {
+        transform: translateX(24px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Top-Right Toggle Switch -->
+  <label class="switch">
+    <input type="checkbox" id="themeToggle" onclick="toggleTheme()">
+    <span class="slider"></span>
+  </label>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <h1>🚀 JavaScript Mini Game Projects</h1>
+    <div class="card-container">
+      <a class="card" href="Memory Game/index.html" target="_blank">🧠 Memory Game</a>
+      <a class="card" href="Hammer the mole/Hammer index.html" target="_blank">🔨 Hammer the Mole</a>
+      <a class="card" href="Hangman Game/index.html" target="_blank">🎯 Hangman Game</a>
+      <a class="card" href="Quiz Game/index.html" target="_blank">📚 Quiz Game</a>
+      <a class="card" href="Snake Game/index.html" target="_blank">🐍 Snake Game</a>
+      <a class="card" href="Rock Paper Scissor Game/index.html" target="_blank">✊🖐✌️ Rock Paper Scissors</a>
+      <a class="card" href="Tic Tak Toe/index.html" target="_blank">⭕❌ Tic Tac Toe</a>
+      <a class="card" href="Chess Game/index.html" target="_blank">♟️ Chess Game</a>
+    </div>
+  </div>
+
+  <script>
+    function toggleTheme() {
+      document.body.classList.toggle('light-mode');
+    }
+  </script>
+</body>
+</html>

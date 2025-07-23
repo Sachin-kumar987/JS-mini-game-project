@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tic Tac Toe - Smart AI</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: #fff;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+    }
+
+    #board {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      grid-template-rows: repeat(3, 100px);
+      gap: 10px;
+    }
+
+    .cell {
+      width: 100px;
+      height: 100px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .cell:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    #message {
+      margin-top: 20px;
+      font-size: 20px;
+    }
+
+    #reset {
+      margin-top: 10px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background: #fff;
+      color: #333;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .win {
+      background-color: #4caf50 !important;
+    }
+  </style>
+</head>
+<body>
+  <h1>  ⭕❌ Tic Tac Toe </h1>
+  <div id="board"></div>
+  <div id="message"></div>
+  <button id="reset">Reset Game</button>
+
+  <script>
+    const board = document.getElementById('board');
+    const message = document.getElementById('message');
+    const resetBtn = document.getElementById('reset');
+    let cells = [];
+    let boardState = Array(9).fill("");
+    let gameActive = true;
+
+    const WIN_PATTERNS = [
+      [0,1,2], [3,4,5], [6,7,8],
+      [0,3,6], [1,4,7], [2,5,8],
+      [0,4,8], [2,4,6]
+    ];
+
+    function createBoard() {
+      board.innerHTML = "";
+      boardState.fill("");
+      gameActive = true;
+      message.textContent = "";
+
+      for (let i = 0; i < 9; i++) {
+        const cell = document.createElement("div");
+        cell.classList.add("cell");
+        cell.dataset.index = i;
+        cell.addEventListener("click", handleHumanClick);
+        board.appendChild(cell);
+        cells.push(cell);
+      }
+    }
+
+    function handleHumanClick(e) {
+      const index = e.target.dataset.index;
+      if (!gameActive || boardState[index] !== "") return;
+
+      makeMove(index, "X");
+      if (gameActive) {
+        setTimeout(() => {
+          const best = getBestMove(boardState);
+          makeMove(best, "O");
+        }, 300);
+      }
+    }
+
+    function makeMove(index, player) {
+      boardState[index] = player;
+      cells[index].textContent = player;
+      const win = checkWinner(player);
+      if (win) {
+        gameActive = false;
+        win.forEach(i => cells[i].classList.add("win"));
+        message.textContent = `${player} wins! 🎉`;
+      } else if (!boardState.includes("")) {
+        gameActive = false;
+        message.textContent = "It's a draw! 🤝";
+      }
+    }
+
+    function checkWinner(player) {
+      for (let pattern of WIN_PATTERNS) {
+        if (pattern.every(i => boardState[i] === player)) {
+          return pattern;
+        }
+      }
+      return null;
+    }
+
+    function getBestMove(state) {
+      let bestScore = -Infinity;
+      let move;
+
+      for (let i = 0; i < 9; i++) {
+        if (state[i] === "") {
+          state[i] = "O";
+          let score = minimax(state, 0, false);
+          state[i] = "";
+          if (score > bestScore) {
+            bestScore = score;
+            move = i;
+          }
+        }
+      }
+      return move;
+    }
+
+    function minimax(state, depth, isMaximizing) {
+      const winner = getWinner(state);
+      if (winner === "O") return 10 - depth;
+      if (winner === "X") return depth - 10;
+      if (!state.includes("")) return 0;
+
+      if (isMaximizing) {
+        let best = -Infinity;
+        for (let i = 0; i < 9; i++) {
+          if (state[i] === "") {
+            state[i] = "O";
+            best = Math.max(best, minimax(state, depth + 1, false));
+            state[i] = "";
+          }
+        }
+        return best;
+      } else {
+        let best = Infinity;
+        for (let i = 0; i < 9; i++) {
+          if (state[i] === "") {
+            state[i] = "X";
+            best = Math.min(best, minimax(state, depth + 1, true));
+            state[i] = "";
+          }
+        }
+        return best;
+      }
+    }
+
+    function getWinner(state) {
+      for (let pattern of WIN_PATTERNS) {
+        const [a, b, c] = pattern;
+        if (state[a] && state[a] === state[b] && state[b] === state[c]) {
+          return state[a];
+        }
+      }
+      return null;
+    }
+
+    resetBtn.addEventListener("click", () => {
+      boardState = Array(9).fill("");
+      cells = [];
+      createBoard();
+    });
+
+    createBoard();
+  </script>
+</body>
+</html>
