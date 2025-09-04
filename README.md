@@ -8,18 +8,26 @@ A collection of fun and interactive JavaScript Mini Games built using HTML, CSS,
 
 
 🚩 Live Demo
-   Current version running at: js-mini-gamepro.netlify.app
+
+   Current version running at:  https://js-mini-gamepro.netlify.app/
 
 
 ✨ Included Games
 
 🎴 Memory Game – Test your memory skills by matching pairs of cards.
+
 🔨 Hammer the Mole – A reflex-based game where you score points by clicking moles.
+
 🎯 Hangman Game – Guess the hidden word before you run out of chances.
+
 📊 Quiz Game – Answer multiple-choice questions with instant feedback.
+
 🐍 Snake Game – Classic snake game with score tracking.
+
 ✊✋✌ Rock Paper Scissors – Play against the computer with random choices.
+
 ⭕❌ Tic Tac Toe – A two-player or AI-based strategic board game.
+
 ♟ Chess Game – A simplified chess game to challenge your strategy.
 
 
