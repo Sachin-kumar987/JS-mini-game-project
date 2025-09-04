@@ -10,9 +10,11 @@ A collection of fun and interactive JavaScript Mini Games built using HTML, CSS,
 🚩 Live Demo
 
    Current version running at:  https://js-mini-gamepro.netlify.app/
+   
 
 
 ✨ Included Games
+
 
 🎴 Memory Game – Test your memory skills by matching pairs of cards.
 
@@ -31,7 +33,10 @@ A collection of fun and interactive JavaScript Mini Games built using HTML, CSS,
 ♟ Chess Game – A simplified chess game to challenge your strategy.
 
 
+
+
 ⚙️ Technologies Used
+
 
 HTML5 – For semantic structure of each game
 
@@ -42,6 +47,8 @@ JavaScript (Vanilla JS) – For game logic, interactivity, and DOM updates
 
 
 🎯 Purpose of the Project
+
+
 
 The goal of this project is to:
 
